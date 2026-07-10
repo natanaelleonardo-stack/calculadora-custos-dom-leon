@@ -5,25 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dom Leon — Custos &amp; Precificação</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <style>
 :root{
-  --bg-deep:#1C1410;
-  --bg-panel:#241A14;
-  --bg-panel-2:#2E2119;
-  --bg-panel-3:#382920;
-  --line: #4a382c;
-  --wheat:#E8B34C;
-  --wheat-dim:#B98B36;
-  --mint:#5FBF8F;
-  --rust:#D96C4D;
-  --text:#F5EFE6;
-  --text-muted:#B8A996;
-  --text-faint:#8a7864;
+  --bg-deep:#F5F0E8;
+  --bg-panel:#FFFFFF;
+  --bg-panel-2:#F3EDE2;
+  --bg-panel-3:#E9DFCC;
+  --line: #DCD1BB;
+  --wheat:#3B2314;
+  --wheat-dim:#5A3A22;
+  --mint:#2E7D5B;
+  --rust:#B5482F;
+  --text:#2B2016;
+  --text-muted:#6B5D4C;
+  --text-faint:#9C8F79;
   --radius:10px;
-  --font-display:'Fraunces',serif;
-  --font-body:'Inter',sans-serif;
+  --font-display:'DM Sans',sans-serif;
+  --font-body:'DM Sans',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
 }
 *{box-sizing:border-box;}
@@ -35,7 +36,7 @@ body{
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
 }
-::selection{background:var(--wheat);color:#1C1410;}
+::selection{background:var(--wheat);color:#F5F0E8;}
 ::-webkit-scrollbar{width:10px;height:10px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--bg-panel-3);border-radius:8px;}
@@ -79,7 +80,7 @@ input,select,textarea{font-family:var(--font-body);}
 
 .topbar{
   position:sticky;top:0;z-index:20;
-  background:rgba(28,20,16,.9);backdrop-filter:blur(8px);
+  background:rgba(245,240,232,.9);backdrop-filter:blur(8px);
   border-bottom:1px solid var(--line);
   padding:14px 28px;display:flex;align-items:center;gap:16px;
 }
@@ -130,7 +131,7 @@ input,select,textarea{font-family:var(--font-body);}
 }
 .btn:hover{border-color:var(--wheat-dim);}
 .btn svg{width:14px;height:14px;}
-.btn-primary{background:var(--wheat);color:#1C1410;border-color:var(--wheat);font-weight:600;}
+.btn-primary{background:var(--wheat);color:#F5F0E8;border-color:var(--wheat);font-weight:600;}
 .btn-primary:hover{background:#f0c063;}
 .btn-ghost{background:transparent;border-color:transparent;color:var(--text-muted);padding:7px 9px;}
 .btn-ghost:hover{color:var(--rust);background:var(--bg-panel-2);}
@@ -190,9 +191,9 @@ tbody tr:hover{background:var(--bg-panel-2);}
 .tab-panel.active{display:block;}
 
 .pill{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:var(--bg-panel-3);color:var(--text-muted);}
-.pill.mint{background:rgba(95,191,143,.15);color:var(--mint);}
-.pill.rust{background:rgba(217,108,77,.15);color:var(--rust);}
-.pill.wheat{background:rgba(232,179,76,.15);color:var(--wheat);}
+.pill.mint{background:rgba(46,125,91,.12);color:var(--mint);}
+.pill.rust{background:rgba(181,72,47,.12);color:var(--rust);}
+.pill.wheat{background:rgba(59,35,20,.10);color:var(--wheat);}
 
 .badge-ing{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -213,7 +214,7 @@ tbody tr:hover{background:var(--bg-panel-2);}
 .section-title:first-child{margin-top:0;}
 
 .hint-banner{
-  background:rgba(232,179,76,.08);border:1px solid rgba(232,179,76,.3);border-radius:8px;
+  background:rgba(59,35,20,.06);border:1px solid rgba(59,35,20,.25);border-radius:8px;
   padding:10px 14px;font-size:12.5px;color:var(--wheat-dim);margin-bottom:16px;
 }
 
@@ -261,7 +262,7 @@ tbody tr:hover{background:var(--bg-panel-2);}
 <body>
 
 <div class="loading-screen" id="loadingScreen">
-  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#E8B34C" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#3B2314" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
   Carregando dados da padaria…
 </div>
 
@@ -269,9 +270,9 @@ tbody tr:hover{background:var(--bg-panel-2);}
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="11" fill="#382920"/>
-        <path d="M7 13c0-3 2-6 5-6s5 3 5 6-2 4-5 4-5-1-5-4Z" stroke="#E8B34C" stroke-width="1.3"/>
-        <path d="M9 12h6M9.5 15h5" stroke="#E8B34C" stroke-width="1"/>
+        <circle cx="12" cy="12" r="11" fill="#F3EDE2"/>
+        <path d="M7 13c0-3 2-6 5-6s5 3 5 6-2 4-5 4-5-1-5-4Z" stroke="#3B2314" stroke-width="1.3"/>
+        <path d="M9 12h6M9.5 15h5" stroke="#3B2314" stroke-width="1"/>
       </svg>
       <div class="brand-text">
         <h1>Dom Leon</h1>
@@ -332,20 +333,12 @@ const NAV_ITEMS = [
   { id:'reports', label:'Relatórios', icon:'chart' },
 ];
 
-const ICONS = {
-  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
-  wheat:'<path d="M12 2v20M12 6c-2 0-3.5 1.5-3.5 3.5S10 13 12 13m0-7c2 0 3.5 1.5 3.5 3.5S14 13 12 13m0 4c-2 0-3.5 1.5-3.5 3.5m3.5-3.5c2 0 3.5 1.5 3.5 3.5"/>',
-  truck:'<rect x="1" y="6" width="14" height="11" rx="1"/><path d="M15 10h4l3 3v4h-7z"/><circle cx="6" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/>',
-  book:'<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5v-17Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>',
-  chart:'<path d="M4 19V5M4 19h16M8 15v3M12 10v8M16 6v12"/>',
-  plus:'<path d="M12 5v14M5 12h14"/>',
-  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
-  trash:'<path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
-  download:'<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/>',
-  upload:'<path d="M12 21V9"/><path d="M7 14l5-5 5 5"/><path d="M4 3h16"/>',
-  print:'<path d="M6 9V2h12v7"/><rect x="6" y="14" width="12" height="8"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/>',
+/* Ícones Tabler (padrão visual dos demais sistemas Dom Leon: Monitor Operacional, Comanda) */
+const TABLER_ICONS = {
+  grid:'layout-dashboard', wheat:'wheat', truck:'truck', book:'book-2', chart:'chart-bar',
+  plus:'plus', edit:'edit', trash:'trash', download:'download', upload:'upload', print:'printer',
 };
-function icon(name, size=17){ return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]||''}</svg>`; }
+function icon(name, size=17){ return `<i class="ti ti-${TABLER_ICONS[name]||'circle'}" style="font-size:${size}px;line-height:1;display:inline-block;"></i>`; }
 
 /* ---------------------------- Persistence ---------------------------- */
 async function loadDB(){
@@ -367,10 +360,14 @@ async function saveDB(){
   }
 }
 function seedDemoData(){
-  const farinha = { id:uid(), nome:'Farinha de Trigo', marca:'Dona Benta', unidadeCompra:'kg', quantidade:5, valor:24.90, frete:0, perdas:2, fornecedorId:null };
-  const acucar = { id:uid(), nome:'Açúcar Refinado', marca:'União', unidadeCompra:'kg', quantidade:5, valor:22.50, frete:0, perdas:0, fornecedorId:null };
-  const ovo = { id:uid(), nome:'Ovo', marca:'', unidadeCompra:'unidade', quantidade:30, valor:18.00, frete:0, perdas:3, fornecedorId:null };
-  const manteiga = { id:uid(), nome:'Manteiga sem sal', marca:'Aviação', unidadeCompra:'kg', quantidade:1, valor:38.00, frete:0, perdas:1, fornecedorId:null };
+  const farinha = { id:uid(), nome:'Farinha de Trigo', marca:'Dona Benta', unidadeCompra:'kg', quantidade:5, valor:24.90, frete:0, perdas:2, fornecedorId:null,
+    nutricional:{ calorias:364, carboidratos:76, acucares:0.3, proteinas:10, gordurasTotais:1, gordurasSaturadas:0.2, fibras:2.7, sodio:2 } };
+  const acucar = { id:uid(), nome:'Açúcar Refinado', marca:'União', unidadeCompra:'kg', quantidade:5, valor:22.50, frete:0, perdas:0, fornecedorId:null,
+    nutricional:{ calorias:387, carboidratos:100, acucares:100, proteinas:0, gordurasTotais:0, gordurasSaturadas:0, fibras:0, sodio:1 } };
+  const ovo = { id:uid(), nome:'Ovo', marca:'', unidadeCompra:'unidade', quantidade:30, valor:18.00, frete:0, perdas:3, fornecedorId:null,
+    nutricional:{ calorias:70, carboidratos:0.6, acucares:0.6, proteinas:6, gordurasTotais:5, gordurasSaturadas:1.6, fibras:0, sodio:70 } };
+  const manteiga = { id:uid(), nome:'Manteiga sem sal', marca:'Aviação', unidadeCompra:'kg', quantidade:1, valor:38.00, frete:0, perdas:1, fornecedorId:null,
+    nutricional:{ calorias:717, carboidratos:0.1, acucares:0.1, proteinas:0.9, gordurasTotais:81, gordurasSaturadas:51, fibras:0, sodio:11 } };
   DB.ingredients = [farinha, acucar, ovo, manteiga];
   DB.suppliers = [{ id:uid(), nome:'Distribuidora Salto Alimentos', contato:'(15) 99999-0000', categoria:'Secos e grãos', obs:'Entrega às terças e sextas' }];
   DB.recipes = [{
@@ -468,6 +465,44 @@ function recipePricing(recipe){
     margemContrib = precoSugerido>0 ? ((precoSugerido-custoBase)/precoSugerido*100) : null;
   }
   return { somaPct, custoBase, precoMinimo, precoSugerido, lucroBruto, taxasValor, lucroLiquido, margemLucro, margemContrib };
+}
+
+/* ---------------------------- Recipe nutrition calc ---------------------------- */
+const NUTRI_KEYS = ['calorias','carboidratos','acucares','proteinas','gordurasTotais','gordurasSaturadas','fibras','sodio'];
+function ingredientNutrientFactor(ing){
+  const base = ingredientBaseUnitLabel(ing);
+  return (base==='g'||base==='ml') ? 100 : 1; // valores cadastrados por 100g/100ml ou por 1 unidade/caixa/pacote
+}
+function recipeNutritionTotal(recipe){
+  const totals = {}; NUTRI_KEYS.forEach(k=>totals[k]=0);
+  recipe.itens.forEach(item=>{
+    const ing = DB.ingredients.find(i=>i.id===item.ingredienteId);
+    if(!ing || !ing.nutricional) return;
+    const factor = ingredientNutrientFactor(ing);
+    const mult = (Number(item.quantidade)||0) / factor;
+    NUTRI_KEYS.forEach(k=> totals[k] += (Number(ing.nutricional[k])||0) * mult);
+  });
+  return totals; // valores para o lote inteiro da receita
+}
+function recipeNutritionPerPortion(recipe){
+  const totals = recipeNutritionTotal(recipe);
+  const n = Number(recipe.numPorcoes)||0;
+  if(n<=0) return null;
+  const out = {}; NUTRI_KEYS.forEach(k=> out[k]=totals[k]/n);
+  return out;
+}
+function recipeNutritionPer100g(recipe){
+  const totals = recipeNutritionTotal(recipe);
+  const g = recipeGramsTotal(recipe);
+  if(!g || g<=0) return null;
+  const out = {}; NUTRI_KEYS.forEach(k=> out[k]=totals[k]/g*100);
+  return out;
+}
+function recipeHasNutritionData(recipe){
+  return recipe.itens.some(item=>{
+    const ing = DB.ingredients.find(i=>i.id===item.ingredienteId);
+    return ing && ing.nutricional && NUTRI_KEYS.some(k=>Number(ing.nutricional[k])>0);
+  });
 }
 
 /* ---------------------------- Toast ---------------------------- */
@@ -579,14 +614,14 @@ function renderDashboardCharts(){
   const ctx1 = document.getElementById('chartDashDistrib');
   if(ctx1) charts.chartDashDistrib = new Chart(ctx1, {
     type:'doughnut',
-    data:{ labels:['Ingredientes','Custos indiretos'], datasets:[{ data:[totalIng,totalIndir], backgroundColor:['#E8B34C','#D96C4D'], borderColor:'#241A14', borderWidth:2 }]},
+    data:{ labels:['Ingredientes','Custos indiretos'], datasets:[{ data:[totalIng,totalIndir], backgroundColor:['#C9862F','#B5482F'], borderColor:'#FFFFFF', borderWidth:2 }]},
     options: chartBaseOptions({legend:true})
   });
   const ctx2 = document.getElementById('chartDashRecipes');
   const top = [...recipes].sort((a,b)=>recipeTotalCost(b)-recipeTotalCost(a)).slice(0,8);
   if(ctx2) charts.chartDashRecipes = new Chart(ctx2, {
     type:'bar',
-    data:{ labels: top.map(r=>r.nome), datasets:[{ label:'Custo total', data: top.map(r=>recipeTotalCost(r)), backgroundColor:'#E8B34C', borderRadius:4 }]},
+    data:{ labels: top.map(r=>r.nome), datasets:[{ label:'Custo total', data: top.map(r=>recipeTotalCost(r)), backgroundColor:'#C9862F', borderRadius:4 }]},
     options: chartBaseOptions({legend:false, indexAxis:'y'})
   });
 }
@@ -594,11 +629,11 @@ function chartBaseOptions({legend=false, indexAxis='x'}={}){
   return {
     indexAxis,
     responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{ display:legend, labels:{ color:'#B8A996', font:{family:'Inter',size:11} } },
-      tooltip:{ backgroundColor:'#382920', titleColor:'#F5EFE6', bodyColor:'#F5EFE6', borderColor:'#4a382c', borderWidth:1 } },
+    plugins:{ legend:{ display:legend, labels:{ color:'#6B5D4C', font:{family:'Inter',size:11} } },
+      tooltip:{ backgroundColor:'#3B2314', titleColor:'#F5F0E8', bodyColor:'#F5F0E8', borderColor:'#5A3A22', borderWidth:1 } },
     scales: indexAxis? {
-      x:{ ticks:{ color:'#B8A996', font:{size:10} }, grid:{ color:'rgba(74,56,44,.4)' } },
-      y:{ ticks:{ color:'#B8A996', font:{size:10} }, grid:{ color:'rgba(74,56,44,.4)' } }
+      x:{ ticks:{ color:'#6B5D4C', font:{size:10} }, grid:{ color:'rgba(220,209,187,.6)' } },
+      y:{ ticks:{ color:'#6B5D4C', font:{size:10} }, grid:{ color:'rgba(220,209,187,.6)' } }
     } : {}
   };
 }
@@ -644,6 +679,9 @@ function renderIngredients(){
 }
 function ingredientFormHtml(ing){
   const suppliersOpt = DB.suppliers.map(s=>`<option value="${s.id}" ${ing&&ing.fornecedorId===s.id?'selected':''}>${s.nome}</option>`).join('');
+  const n = ing && ing.nutricional ? ing.nutricional : {};
+  const refBase = ing ? unitDef(ing.unidadeCompra).base : 'g';
+  const refLabel = (refBase==='g'||refBase==='ml') ? `100${refBase}` : `1 ${refBase}`;
   return `
   <div class="field-row">
     <div class="field"><label>Nome do ingrediente *</label><input id="fNome" value="${ing?ing.nome:''}" placeholder="Ex: Farinha de trigo"></div>
@@ -664,6 +702,25 @@ function ingredientFormHtml(ing){
     <div class="field"><label>Fornecedor (opcional)</label><select id="fFornecedor"><option value="">— Nenhum —</option>${suppliersOpt}</select></div>
   </div>
   <div class="hint-banner" id="ingPreview">Preencha os campos para ver o custo unitário calculado.</div>
+
+  <div class="section-title" id="nutriSectionTitle">Informação nutricional (opcional, por ${refLabel})</div>
+  <div class="field-row">
+    <div class="field"><label>Valor energético (kcal)</label><input id="nCal" type="number" step="any" min="0" value="${n.calorias||''}"></div>
+    <div class="field"><label>Carboidratos (g)</label><input id="nCarb" type="number" step="any" min="0" value="${n.carboidratos||''}"></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>Açúcares (g)</label><input id="nAcucares" type="number" step="any" min="0" value="${n.acucares||''}"></div>
+    <div class="field"><label>Proteínas (g)</label><input id="nProt" type="number" step="any" min="0" value="${n.proteinas||''}"></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>Gorduras totais (g)</label><input id="nGordTotal" type="number" step="any" min="0" value="${n.gordurasTotais||''}"></div>
+    <div class="field"><label>Gorduras saturadas (g)</label><input id="nGordSat" type="number" step="any" min="0" value="${n.gordurasSaturadas||''}"></div>
+  </div>
+  <div class="field-row">
+    <div class="field"><label>Fibra alimentar (g)</label><input id="nFibras" type="number" step="any" min="0" value="${n.fibras||''}"></div>
+    <div class="field"><label>Sódio (mg)</label><input id="nSodio" type="number" step="any" min="0" value="${n.sodio||''}"></div>
+  </div>
+  <small style="color:var(--text-faint);">Copie os valores do rótulo da embalagem ou de uma tabela de referência (ex: TACO). Deixe em branco se não tiver essa informação — a receita calcula normalmente sem ela.</small>
   `;
 }
 function openIngredientModal(id){
@@ -676,6 +733,10 @@ function openIngredientModal(id){
         const tmp = readIngredientForm();
         const cost = ingredientUnitCost(tmp);
         root.querySelector('#ingPreview').innerHTML = `Custo calculado: <strong style="color:var(--wheat);">${fmtBRL(cost)} / ${ingredientBaseUnitLabel(tmp)}</strong>`;
+        const refBase = unitDef(tmp.unidadeCompra).base;
+        const refLabel = (refBase==='g'||refBase==='ml') ? `100${refBase}` : `1 ${refBase}`;
+        const titleEl = root.querySelector('#nutriSectionTitle');
+        if(titleEl) titleEl.textContent = `Informação nutricional (opcional, por ${refLabel})`;
       };
       root.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',update));
       update();
@@ -699,6 +760,16 @@ function openIngredientModal(id){
       frete: parseFloat(root.querySelector('#fFrete').value)||0,
       perdas: parseFloat(root.querySelector('#fPerdas').value)||0,
       fornecedorId: root.querySelector('#fFornecedor').value || null,
+      nutricional: {
+        calorias: parseFloat(root.querySelector('#nCal').value)||0,
+        carboidratos: parseFloat(root.querySelector('#nCarb').value)||0,
+        acucares: parseFloat(root.querySelector('#nAcucares').value)||0,
+        proteinas: parseFloat(root.querySelector('#nProt').value)||0,
+        gordurasTotais: parseFloat(root.querySelector('#nGordTotal').value)||0,
+        gordurasSaturadas: parseFloat(root.querySelector('#nGordSat').value)||0,
+        fibras: parseFloat(root.querySelector('#nFibras').value)||0,
+        sodio: parseFloat(root.querySelector('#nSodio').value)||0,
+      },
     };
   }
 }
@@ -781,7 +852,7 @@ function renderRecipes(){
           <span class="mono" style="font-weight:600;">${fmtBRL(total)}</span>
         </div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-          <span style="color:var(--text-faint);font-size:12px;">Preço sugerido</span>
+          <span style="color:var(--text-faint);font-size:12px;">Preço sugerido <span style="opacity:.7;">(por porção)</span></span>
           <span class="mono" style="font-weight:600;color:var(--wheat);">${pricing.precoSugerido!==null?fmtBRL(pricing.precoSugerido):'—'}</span>
         </div>
         <div style="display:flex;justify-content:space-between;">
@@ -813,12 +884,14 @@ function openRecipeModal(id){
         <button class="tab-btn" data-tab="ing">Ingredientes</button>
         <button class="tab-btn" data-tab="indir">Custos indiretos</button>
         <button class="tab-btn" data-tab="preco">Precificação</button>
+        <button class="tab-btn" data-tab="nutri">Nutricional</button>
         <button class="tab-btn" data-tab="result">Resultado</button>
       </div>
       <div id="tab-info" class="tab-panel active"></div>
       <div id="tab-ing" class="tab-panel"></div>
       <div id="tab-indir" class="tab-panel"></div>
       <div id="tab-preco" class="tab-panel"></div>
+      <div id="tab-nutri" class="tab-panel"></div>
       <div id="tab-result" class="tab-panel"></div>
     `,
     onMount:(root)=>{
@@ -826,6 +899,7 @@ function openRecipeModal(id){
       renderRecipeTabIngredients(root);
       renderRecipeTabIndirect(root);
       renderRecipeTabPricing(root);
+      renderRecipeTabNutrition(root);
       renderRecipeTabResult(root);
       root.querySelectorAll('.tab-btn').forEach(btn=>{
         btn.addEventListener('click',()=>{
@@ -834,6 +908,7 @@ function openRecipeModal(id){
           btn.classList.add('active');
           root.querySelector('#tab-'+btn.dataset.tab).classList.add('active');
           if(btn.dataset.tab==='result') renderRecipeTabResult(root);
+          if(btn.dataset.tab==='nutri') renderRecipeTabNutrition(root);
         });
       });
     },
@@ -1016,6 +1091,61 @@ function renderRecipeTabPricing(root){
   }));
 }
 
+function renderRecipeTabNutrition(root){
+  const wrap = root.querySelector('#tab-nutri');
+  if(!wrap.dataset.mode) wrap.dataset.mode = 'porcao';
+  drawNutrition();
+
+  function drawNutrition(){
+    const mode = wrap.dataset.mode;
+    const hasData = recipeHasNutritionData(recipeDraft);
+    const perPorcao = recipeNutritionPerPortion(recipeDraft);
+    const per100 = recipeNutritionPer100g(recipeDraft);
+    const values = mode==='porcao' ? perPorcao : per100;
+    const refText = mode==='porcao'
+      ? (recipeDraft.numPorcoes ? `Porção (receita rende ${recipeDraft.numPorcoes} porções)` : 'Informe o número de porções em "Dados gerais"')
+      : (recipeGramsTotal(recipeDraft) ? '100 g' : 'Disponível apenas para receitas com rendimento em g ou kg');
+
+    const rows = [
+      ['Valor energético', values? fmtNum(values.calorias,0)+' kcal' : '—', true],
+      ['Carboidratos', values? fmtNum(values.carboidratos)+' g' : '—'],
+      ['Açúcares', values? fmtNum(values.acucares)+' g' : '—'],
+      ['Proteínas', values? fmtNum(values.proteinas)+' g' : '—'],
+      ['Gorduras totais', values? fmtNum(values.gordurasTotais)+' g' : '—'],
+      ['Gorduras saturadas', values? fmtNum(values.gordurasSaturadas)+' g' : '—', false, true],
+      ['Fibra alimentar', values? fmtNum(values.fibras)+' g' : '—'],
+      ['Sódio', values? fmtNum(values.sodio,0)+' mg' : '—'],
+    ];
+
+    wrap.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <span class="section-title" style="margin:0;">Informação nutricional calculada</span>
+        <div style="display:flex;background:var(--bg-panel-2);border:1px solid var(--line);border-radius:7px;overflow:hidden;">
+          <button data-nutri-mode="porcao" class="btn-sm" style="border:none;border-radius:0;background:${mode==='porcao'?'var(--wheat)':'transparent'};color:${mode==='porcao'?'#F5F0E8':'var(--text-muted)'};">Por porção</button>
+          <button data-nutri-mode="100g" class="btn-sm" style="border:none;border-radius:0;background:${mode==='100g'?'var(--wheat)':'transparent'};color:${mode==='100g'?'#F5F0E8':'var(--text-muted)'};">Por 100g</button>
+        </div>
+      </div>
+      ${!hasData ? `<div class="hint-banner">Nenhum ingrediente desta receita tem dados nutricionais cadastrados ainda. Edite os ingredientes para adicionar essa informação.</div>` : ''}
+      <div style="background:var(--bg-panel-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:4px;">
+        <div style="font-weight:600;font-size:14.5px;margin-bottom:2px;">${refText}</div>
+      </div>
+      <table>
+        <tbody>
+          ${rows.map(([label,val,big,indent])=>`
+            <tr>
+              <td style="${indent?'padding-left:24px;color:var(--text-muted);':''}${big?'font-weight:600;':''}">${label}</td>
+              <td class="num mono" style="${big?'color:var(--wheat);font-weight:600;':''}">${val}</td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="hint-banner" style="margin-top:14px;">Valores calculados a partir dos dados nutricionais cadastrados em cada ingrediente. Não substitui laudo laboratorial nem o rótulo oficial (ANVISA RDC 429/2020).</div>
+    `;
+    wrap.querySelectorAll('[data-nutri-mode]').forEach(btn=>{
+      btn.addEventListener('click',()=>{ wrap.dataset.mode = btn.dataset.nutriMode; drawNutrition(); });
+    });
+  }
+}
+
 function renderRecipeTabResult(root){
   const wrap = root.querySelector('#tab-result');
   const total = recipeTotalCost(recipeDraft);
@@ -1078,16 +1208,16 @@ function openRecipeDetail(id){
       destroyChart('chartDetailDistrib'); destroyChart('chartDetailIngredients'); destroyChart('chartDetailHistory');
       const ing = recipeIngredientsCost(r), indir = recipeIndirectCost(r);
       const c1 = document.getElementById('chartDetailDistrib');
-      if(c1) charts.chartDetailDistrib = new Chart(c1,{type:'doughnut',data:{labels:['Ingredientes','Custos indiretos'],datasets:[{data:[ing,indir],backgroundColor:['#E8B34C','#D96C4D'],borderColor:'#241A14',borderWidth:2}]},options:chartBaseOptions({legend:true})});
+      if(c1) charts.chartDetailDistrib = new Chart(c1,{type:'doughnut',data:{labels:['Ingredientes','Custos indiretos'],datasets:[{data:[ing,indir],backgroundColor:['#C9862F','#B5482F'],borderColor:'#FFFFFF',borderWidth:2}]},options:chartBaseOptions({legend:true})});
       const itemsSorted = [...r.itens].map(it=>{
         const i = DB.ingredients.find(x=>x.id===it.ingredienteId);
         return { nome: i?i.nome:'—', val: i? ingredientUnitCost(i)*(Number(it.quantidade)||0) : 0 };
       }).sort((a,b)=>b.val-a.val);
       const c2 = document.getElementById('chartDetailIngredients');
-      if(c2) charts.chartDetailIngredients = new Chart(c2,{type:'bar',data:{labels:itemsSorted.map(x=>x.nome),datasets:[{label:'Custo',data:itemsSorted.map(x=>x.val),backgroundColor:'#E8B34C',borderRadius:4}]},options:chartBaseOptions({legend:false,indexAxis:'y'})});
+      if(c2) charts.chartDetailIngredients = new Chart(c2,{type:'bar',data:{labels:itemsSorted.map(x=>x.nome),datasets:[{label:'Custo',data:itemsSorted.map(x=>x.val),backgroundColor:'#C9862F',borderRadius:4}]},options:chartBaseOptions({legend:false,indexAxis:'y'})});
       if(r.priceHistory && r.priceHistory.length>1){
         const c3 = document.getElementById('chartDetailHistory');
-        if(c3) charts.chartDetailHistory = new Chart(c3,{type:'line',data:{labels:r.priceHistory.map(h=>h.date),datasets:[{label:'Preço sugerido',data:r.priceHistory.map(h=>h.preco),borderColor:'#5FBF8F',backgroundColor:'rgba(95,191,143,.15)',fill:true,tension:.3}]},options:chartBaseOptions({legend:false})});
+        if(c3) charts.chartDetailHistory = new Chart(c3,{type:'line',data:{labels:r.priceHistory.map(h=>h.date),datasets:[{label:'Preço sugerido',data:r.priceHistory.map(h=>h.preco),borderColor:'#2E7D5B',backgroundColor:'rgba(46,125,91,.12)',fill:true,tension:.3}]},options:chartBaseOptions({legend:false})});
       }
       document.getElementById('btnEditFromDetail').addEventListener('click',()=>{ closeModal(); openRecipeModal(r.id); });
       document.getElementById('btnPrintRecipe').addEventListener('click',()=>printRecipe(r));
@@ -1108,6 +1238,21 @@ function printRecipe(r){
     return `<tr><td>${ing.nome}</td><td style="text-align:right;">${fmtNum(it.quantidade)} ${ingredientBaseUnitLabel(ing)}</td><td style="text-align:right;">${fmtBRL(c)}</td></tr>`;
   }).join('');
   const indirRows = (r.custosIndiretos||[]).map(c=>`<tr><td>${c.nome}</td><td></td><td style="text-align:right;">${fmtBRL(c.valor)}</td></tr>`).join('');
+  const nutriPorcao = recipeNutritionPerPortion(r);
+  const nutriBlock = (recipeHasNutritionData(r) && nutriPorcao) ? `
+    <h2 style="font-family:Georgia,serif;margin-top:24px;">Informação nutricional (por porção)</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:8px;" border="1" cellpadding="6">
+      <tr><td>Valor energético</td><td style="text-align:right;">${fmtNum(nutriPorcao.calorias,0)} kcal</td></tr>
+      <tr><td>Carboidratos</td><td style="text-align:right;">${fmtNum(nutriPorcao.carboidratos)} g</td></tr>
+      <tr><td>Açúcares</td><td style="text-align:right;">${fmtNum(nutriPorcao.acucares)} g</td></tr>
+      <tr><td>Proteínas</td><td style="text-align:right;">${fmtNum(nutriPorcao.proteinas)} g</td></tr>
+      <tr><td>Gorduras totais</td><td style="text-align:right;">${fmtNum(nutriPorcao.gordurasTotais)} g</td></tr>
+      <tr><td>Gorduras saturadas</td><td style="text-align:right;">${fmtNum(nutriPorcao.gordurasSaturadas)} g</td></tr>
+      <tr><td>Fibra alimentar</td><td style="text-align:right;">${fmtNum(nutriPorcao.fibras)} g</td></tr>
+      <tr><td>Sódio</td><td style="text-align:right;">${fmtNum(nutriPorcao.sodio,0)} mg</td></tr>
+    </table>
+    <p style="font-size:10px;color:#777;margin-top:6px;">Valores calculados, não substituem laudo laboratorial nem o rótulo oficial (ANVISA RDC 429/2020).</p>
+  ` : '';
   document.getElementById('print-area').innerHTML = `
     <h1 style="font-family:Georgia,serif;">Ficha Técnica — ${r.nome}</h1>
     <p>Categoria: ${r.categoria||'—'} · Rendimento: ${fmtNum(r.rendimentoTotal,0)} ${r.unidadeRendimento} · Porções: ${r.numPorcoes||'—'}</p>
@@ -1121,6 +1266,7 @@ function printRecipe(r){
       <tr><td><strong>Preço sugerido de venda</strong></td><td style="text-align:right;"><strong>${pricing.precoSugerido!==null?fmtBRL(pricing.precoSugerido):'—'}</strong></td></tr>
       <tr><td>Margem de lucro</td><td style="text-align:right;">${pricing.margemLucro!==null?fmtPct(pricing.margemLucro):'—'}</td></tr>
     </table>
+    ${nutriBlock}
     <p style="margin-top:24px;color:#555;font-size:11px;">Gerado por Dom Leon — Custos &amp; Precificação em ${new Date().toLocaleDateString('pt-BR')}</p>
   `;
   window.print();
@@ -1169,9 +1315,9 @@ function renderReportsCharts(){
   });
   const top = Object.entries(impactMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
   const c1 = document.getElementById('chartRepImpact');
-  if(c1) charts.chartRepImpact = new Chart(c1,{type:'bar',data:{labels:top.map(t=>t[0]),datasets:[{label:'Custo acumulado',data:top.map(t=>t[1]),backgroundColor:'#E8B34C',borderRadius:4}]},options:chartBaseOptions({legend:false,indexAxis:'y'})});
+  if(c1) charts.chartRepImpact = new Chart(c1,{type:'bar',data:{labels:top.map(t=>t[0]),datasets:[{label:'Custo acumulado',data:top.map(t=>t[1]),backgroundColor:'#C9862F',borderRadius:4}]},options:chartBaseOptions({legend:false,indexAxis:'y'})});
   const c2 = document.getElementById('chartRepDistrib');
-  if(c2) charts.chartRepDistrib = new Chart(c2,{type:'pie',data:{labels:['Ingredientes','Custos indiretos'],datasets:[{data:[totalIng,totalIndir],backgroundColor:['#E8B34C','#D96C4D'],borderColor:'#241A14',borderWidth:2}]},options:chartBaseOptions({legend:true})});
+  if(c2) charts.chartRepDistrib = new Chart(c2,{type:'pie',data:{labels:['Ingredientes','Custos indiretos'],datasets:[{data:[totalIng,totalIndir],backgroundColor:['#C9862F','#B5482F'],borderColor:'#FFFFFF',borderWidth:2}]},options:chartBaseOptions({legend:true})});
 
   const sel = document.getElementById('repRecipeSelect');
   function drawHistory(){
@@ -1179,7 +1325,7 @@ function renderReportsCharts(){
     const r = DB.recipes.find(x=>x.id===sel.value) || DB.recipes[0];
     const c3 = document.getElementById('chartRepHistory');
     const hist = (r.priceHistory&&r.priceHistory.length) ? r.priceHistory : [{date:new Date().toISOString().slice(0,10), preco: recipePricing(r).precoSugerido||0}];
-    if(c3) charts.chartRepHistory = new Chart(c3,{type:'line',data:{labels:hist.map(h=>h.date),datasets:[{label:'Preço sugerido',data:hist.map(h=>h.preco),borderColor:'#5FBF8F',backgroundColor:'rgba(95,191,143,.15)',fill:true,tension:.3}]},options:chartBaseOptions({legend:false})});
+    if(c3) charts.chartRepHistory = new Chart(c3,{type:'line',data:{labels:hist.map(h=>h.date),datasets:[{label:'Preço sugerido',data:hist.map(h=>h.preco),borderColor:'#2E7D5B',backgroundColor:'rgba(46,125,91,.12)',fill:true,tension:.3}]},options:chartBaseOptions({legend:false})});
   }
   if(sel){ sel.addEventListener('change', drawHistory); drawHistory(); }
 }
