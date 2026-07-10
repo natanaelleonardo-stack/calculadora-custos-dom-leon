@@ -341,10 +341,25 @@ const TABLER_ICONS = {
 function icon(name, size=17){ return `<i class="ti ti-${TABLER_ICONS[name]||'circle'}" style="font-size:${size}px;line-height:1;display:inline-block;"></i>`; }
 
 /* ---------------------------- Persistence ---------------------------- */
+/* Armazenamento: usa window.storage quando disponível (prévia dentro do Claude);
+   fora daqui (GitHub Pages, arquivo local etc.) usa localStorage do navegador. */
+const STORAGE_KEY = 'domleon_custos_db';
+async function storageGetRaw(key){
+  if(typeof window!=='undefined' && window.storage && typeof window.storage.get==='function'){
+    try{ const r = await window.storage.get(key); return r? r.value : null; }catch(e){ /* cai para localStorage */ }
+  }
+  try{ return localStorage.getItem(key); }catch(e){ return null; }
+}
+async function storageSetRaw(key, value){
+  if(typeof window!=='undefined' && window.storage && typeof window.storage.set==='function'){
+    try{ await window.storage.set(key, value); return true; }catch(e){ /* cai para localStorage */ }
+  }
+  try{ localStorage.setItem(key, value); return true; }catch(e){ return false; }
+}
 async function loadDB(){
   try{
-    const res = await window.storage.get('db');
-    if(res && res.value){ DB = JSON.parse(res.value); }
+    const raw = await storageGetRaw(STORAGE_KEY);
+    if(raw){ DB = JSON.parse(raw); }
     else { seedDemoData(); await saveDB(); }
   }catch(e){
     seedDemoData();
@@ -353,7 +368,8 @@ async function loadDB(){
 }
 async function saveDB(){
   try{
-    await window.storage.set('db', JSON.stringify(DB));
+    const ok = await storageSetRaw(STORAGE_KEY, JSON.stringify(DB));
+    if(!ok) toast('Erro ao salvar dados. Tente novamente.', true);
   }catch(e){
     console.error('Erro ao salvar dados', e);
     toast('Erro ao salvar dados. Tente novamente.', true);
