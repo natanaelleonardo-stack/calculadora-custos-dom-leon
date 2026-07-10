@@ -647,8 +647,35 @@ function destroyChart(id){ if(charts[id]){ charts[id].destroy(); delete charts[i
 /* ============================================================
    INGREDIENTES
    ============================================================ */
+let ingFilterText = '';
+let ingSortCol = 'nome';
+let ingSortDir = 'asc';
+const ING_SORT_LABELS = { nome:'Nome', marca:'Marca', compra:'Compra', valor:'Valor pago', frete:'Frete', perdas:'Perdas', custo:'Custo unitário' };
+function ingredientSortValue(ing, col){
+  if(col==='nome') return ing.nome.toLowerCase();
+  if(col==='marca') return (ing.marca||'').toLowerCase();
+  if(col==='compra') return Number(ing.quantidade)||0;
+  if(col==='valor') return Number(ing.valor)||0;
+  if(col==='frete') return Number(ing.frete)||0;
+  if(col==='perdas') return Number(ing.perdas)||0;
+  if(col==='custo') return ingredientUnitCost(ing);
+  return '';
+}
+function sortIcon(col){
+  if(ingSortCol!==col) return '<i class="ti ti-arrows-sort" style="font-size:12px;opacity:.4;margin-left:4px;"></i>';
+  return ingSortDir==='asc'
+    ? '<i class="ti ti-sort-ascending" style="font-size:12px;color:var(--wheat);margin-left:4px;"></i>'
+    : '<i class="ti ti-sort-descending" style="font-size:12px;color:var(--wheat);margin-left:4px;"></i>';
+}
 function renderIngredients(){
-  const list = DB.ingredients.filter(i=> !searchTerm || i.nome.toLowerCase().includes(searchTerm) || (i.marca||'').toLowerCase().includes(searchTerm));
+  const q = ingFilterText.trim().toLowerCase();
+  let list = DB.ingredients.filter(i=> !q || i.nome.toLowerCase().includes(q) || (i.marca||'').toLowerCase().includes(q) || unitDef(i.unidadeCompra).label.toLowerCase().includes(q));
+  list = [...list].sort((a,b)=>{
+    const va = ingredientSortValue(a, ingSortCol), vb = ingredientSortValue(b, ingSortCol);
+    let cmp = typeof va==='string' ? va.localeCompare(vb,'pt-BR') : (va-vb);
+    return ingSortDir==='asc' ? cmp : -cmp;
+  });
+  const th = (col,label,numeric)=>`<th class="${numeric?'num':''}" data-sort-col="${col}" style="cursor:pointer;user-select:none;white-space:nowrap;">${label}${sortIcon(col)}</th>`;
   return `
   <div class="btn-row" style="margin-bottom:16px;">
     <button class="btn btn-primary" id="btnNewIngredient">${icon('plus',15)} Novo ingrediente</button>
@@ -658,10 +685,13 @@ function renderIngredients(){
     </label>
     <span style="margin-left:auto;color:var(--text-faint);font-size:12.5px;">${list.length} ingrediente(s)</span>
   </div>
+  <div class="field" style="max-width:340px;margin-bottom:14px;">
+    <input id="ingFilterInput" placeholder="Filtrar ingredientes… (nome, marca, unidade)" value="${ingFilterText.replace(/"/g,'&quot;')}" autocomplete="off">
+  </div>
   <div class="card">
     <table>
       <thead><tr>
-        <th>Nome</th><th>Marca</th><th>Compra</th><th class="num">Valor pago</th><th class="num">Frete</th><th class="num">Perdas</th><th class="num">Custo unitário</th><th></th>
+        ${th('nome','Nome')}${th('marca','Marca')}${th('compra','Compra',true)}${th('valor','Valor pago',true)}${th('frete','Frete',true)}${th('perdas','Perdas',true)}${th('custo','Custo unitário',true)}<th></th>
       </tr></thead>
       <tbody>
         ${list.length? list.map(ing=>`
@@ -677,7 +707,7 @@ function renderIngredients(){
               <button class="icon-btn" data-edit-ing="${ing.id}">${icon('edit',15)}</button>
               <button class="icon-btn danger" data-del-ing="${ing.id}">${icon('trash',15)}</button>
             </td>
-          </tr>`).join('') : `<tr class="empty-row"><td colspan="8">Nenhum ingrediente cadastrado ainda. Clique em “Novo ingrediente” para começar.</td></tr>`}
+          </tr>`).join('') : `<tr class="empty-row"><td colspan="8">${q? 'Nenhum ingrediente encontrado para “'+q+'”.':'Nenhum ingrediente cadastrado ainda. Clique em “Novo ingrediente” para começar.'}</td></tr>`}
       </tbody>
     </table>
   </div>`;
@@ -1430,6 +1460,13 @@ function importIngredientsCsv(file){
 /* ============================================================
    Page event handlers (delegated per render)
    ============================================================ */
+function rerenderIngredientsPreservingFocus(caret){
+  document.getElementById('content').innerHTML = renderIngredients();
+  attachPageHandlers();
+  const input = document.getElementById('ingFilterInput');
+  if(input){ input.focus(); const pos = caret!=null?caret:input.value.length; input.setSelectionRange(pos,pos); }
+}
+
 function attachPageHandlers(){
   // Dashboard charts
   if(currentPage==='dashboard') renderDashboardCharts();
@@ -1445,6 +1482,18 @@ function attachPageHandlers(){
       DB.recipes.forEach(r=> r.itens = r.itens.filter(it=>it.ingredienteId!==b.dataset.delIng));
       saveDB(); navigate(); toast('Ingrediente excluído.');
     }
+  }));
+  const ingFilterInput = document.getElementById('ingFilterInput');
+  if(ingFilterInput) ingFilterInput.addEventListener('input',(e)=>{
+    ingFilterText = e.target.value;
+    const caret = e.target.selectionStart;
+    rerenderIngredientsPreservingFocus(caret);
+  });
+  document.querySelectorAll('[data-sort-col]').forEach(th=>th.addEventListener('click',()=>{
+    const col = th.dataset.sortCol;
+    if(ingSortCol===col){ ingSortDir = ingSortDir==='asc'?'desc':'asc'; } else { ingSortCol = col; ingSortDir='asc'; }
+    document.getElementById('content').innerHTML = renderIngredients();
+    attachPageHandlers();
   }));
   const btnExpIng = document.getElementById('btnExportIngCsv');
   if(btnExpIng) btnExpIng.addEventListener('click', exportIngredientsCsv);
