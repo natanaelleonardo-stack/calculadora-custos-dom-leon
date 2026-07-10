@@ -1374,8 +1374,13 @@ function downloadFile(filename, content, mime='text/csv;charset=utf-8;'){
 function toCsvRow(arr){ return arr.map(v=>{ v = (v===null||v===undefined)?'':String(v); if(/[;"\n]/.test(v)) v = '"'+v.replace(/"/g,'""')+'"'; return v; }).join(';'); }
 
 function exportIngredientsCsv(){
-  const header = ['Nome','Marca','UnidadeCompra','Quantidade','Valor','Frete','Perdas(%)','CustoUnitario','UnidadeBase'];
-  const rows = DB.ingredients.map(i=>[i.nome,i.marca||'',i.unidadeCompra,i.quantidade,i.valor,i.frete||0,i.perdas||0,ingredientUnitCost(i).toFixed(4),ingredientBaseUnitLabel(i)]);
+  const header = ['Nome','Marca','UnidadeCompra','Quantidade','Valor','Frete','Perdas(%)','Calorias','Carboidratos','Acucares','Proteinas','GordurasTotais','GordurasSaturadas','Fibras','Sodio','CustoUnitario','UnidadeBase'];
+  const rows = DB.ingredients.map(i=>{
+    const n = i.nutricional||{};
+    return [i.nome,i.marca||'',i.unidadeCompra,i.quantidade,i.valor,i.frete||0,i.perdas||0,
+      n.calorias||0,n.carboidratos||0,n.acucares||0,n.proteinas||0,n.gordurasTotais||0,n.gordurasSaturadas||0,n.fibras||0,n.sodio||0,
+      ingredientUnitCost(i).toFixed(4),ingredientBaseUnitLabel(i)];
+  });
   const csv = [toCsvRow(header), ...rows.map(toCsvRow)].join('\n');
   downloadFile('ingredientes.csv', csv);
   toast('CSV de ingredientes exportado.');
@@ -1396,19 +1401,27 @@ function importIngredientsCsv(file){
     try{
       const text = e.target.result.replace(/^\uFEFF/,'');
       const lines = text.split(/\r?\n/).filter(l=>l.trim().length);
-      let count=0;
+      let added=0, updated=0;
       lines.slice(1).forEach(line=>{
         const cols = line.split(';');
         if(cols.length<6) return;
-        DB.ingredients.push({
-          id:uid(), nome:cols[0]?.trim()||'Ingrediente', marca:cols[1]?.trim()||'',
+        const nome = cols[0]?.trim()||'Ingrediente';
+        const data = {
+          nome, marca: cols[1]?.trim()||'',
           unidadeCompra: UNITS_COMPRA.some(u=>u.v===cols[2]?.trim())? cols[2].trim():'unidade',
           quantidade: parseFloat(cols[3])||0, valor: parseFloat(cols[4])||0,
-          frete: parseFloat(cols[5])||0, perdas: parseFloat(cols[6])||0, fornecedorId:null
-        });
-        count++;
+          frete: parseFloat(cols[5])||0, perdas: parseFloat(cols[6])||0,
+          nutricional: {
+            calorias: parseFloat(cols[7])||0, carboidratos: parseFloat(cols[8])||0, acucares: parseFloat(cols[9])||0,
+            proteinas: parseFloat(cols[10])||0, gordurasTotais: parseFloat(cols[11])||0, gordurasSaturadas: parseFloat(cols[12])||0,
+            fibras: parseFloat(cols[13])||0, sodio: parseFloat(cols[14])||0,
+          }
+        };
+        const existing = DB.ingredients.find(i=>i.nome.trim().toLowerCase()===nome.toLowerCase());
+        if(existing){ Object.assign(existing, data); updated++; }
+        else { DB.ingredients.push({ id:uid(), fornecedorId:null, ...data }); added++; }
       });
-      saveDB(); navigate(); toast(`${count} ingrediente(s) importado(s).`);
+      saveDB(); navigate(); toast(`${added} ingrediente(s) adicionados, ${updated} atualizados.`);
     }catch(err){ console.error(err); toast('Erro ao importar CSV. Verifique o formato.', true); }
   };
   reader.readAsText(file);
